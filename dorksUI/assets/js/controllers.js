@@ -1,5 +1,11 @@
 (function(){
-    var app = angular.module('regMercMod', ['ngTouch', 'ui.bootstrap', 'inform', 'ngAnimate', 'ngFileUpload']);
+    var app = angular.module('regMercMod', [
+        'ngTouch',
+        'ui.bootstrap',
+        'inform',
+        'ngAnimate',
+        'ngFileUpload'
+    ]);
 
     app.controller('regMercCtrl',['$scope', 'inform', function($scope, inform){
         $scope.numeric = /^([0-9])*$/;

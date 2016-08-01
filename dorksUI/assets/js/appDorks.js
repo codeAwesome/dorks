@@ -1,5 +1,8 @@
 (function(){
-    var app = angular.module('dorkStore', ['ngRoute', 'regMercMod']);
+    var app = angular.module('dorkStore', [
+        'ngRoute',
+        'regMercMod'
+    ]);
 
     app.config(['$routeProvider', function($routeProvaider){
         $routeProvaider
