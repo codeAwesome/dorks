@@ -57,7 +57,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="col-lg-6" ng-controller="imagesCtrl">
+				<div class="col-lg-6" ng-controller="fileCtrl">
 					<div style="height: 300px;">
 						<uib-carousel active="active" interval="5000" no-wrap="false">
 							<uib-slide ng-repeat="slide in img track by slide.id" index="slide.id">
@@ -70,7 +70,7 @@
 						</uib-carousel>
 					</div>
 
-					<div class="images-preview" ng-controller="fileCtrl">
+					<div class="images-preview">
 						<div class="gallery">
 							<div class="drop-box clearImg" ng-show="picD1" ng-mouseleave="hideDelete(1)">
 								<span class="btn btn-danger ion-android-delete" ng-click="borrar(0)"></span>
