@@ -1,0 +1,13 @@
+<form class="login-form" name="loginForm" ng-controller="loginCtrl as login"
+      ng-submit="login.send()" method="POST" novalidate>
+
+	<div class="form-group" ng-class="{ 'has-error': !loginForm.nickName.$pristine && loginForm.nickName.$error.required, 'has-success': !loginForm.nickName.$pristine && loginForm.nickName.$valid }">
+		<input type="text" name="nickName" placeholder="Nickname..." class="form-control" ng-model="login.nickName" required>
+	</div>
+
+	<div class="form-group" ng-class="{ 'has-error': !loginForm.password.$pristine && loginForm.password.$error.required, 'has-success': !loginForm.password.$pristine && loginForm.password.$valid }">
+		<input type="password" name="password" placeholder="Password..." class="form-control" ng-model="login.password" required>
+	</div>
+
+	<button type="submit" class="btn" ng-disabled="loginForm.$invalid">Ingresar</button>
+</form>
