@@ -5,8 +5,8 @@
 				<h3 class="box-title">Registor de Mercancias Dork's</h3> <i class="icon ion-pricetags icon-mer"></i>
 			</div>
 			<div class="box-body">
-				<div class="col-lg-6">
-					<form name="mercFrm" ng-controller="regMercCtrl" novalidate>
+				<form name="mercFrm" ng-controller="regMercCtrl" novalidate>
+					<div class="col-lg-6">
 						<div class="col-md-6 col-md-offset-3"
 						     ng-class="{ 'has-error': !mercFrm.des.$pristine && mercFrm.des.$error.required,
 					     'has-success': !mercFrm.des.$pristine && mercFrm.des.$valid }">
@@ -55,9 +55,8 @@
 							<button class="btn bg-purple btn-flat" ng-click="setMerc(merc)">Guardar</button>
 							<button type="reset" class="btn bg-orange btn-flat" ng-click="clear()">Limpiar</button>
 						</div>
-					</form>
-				</div>
-				<div class="col-lg-6" ng-controller="fileCtrl">
+					</div>
+					<div class="col-lg-6" ng-controller="fileCtrl">
 					<div style="height: 300px;">
 						<uib-carousel active="active" interval="5000" no-wrap="false">
 							<uib-slide ng-repeat="slide in img track by slide.id" index="slide.id">
@@ -111,6 +110,7 @@
 						</div>
 					</div>
 				</div>
+				</form>
 			<!-- /.box -->
 			</div>
 		</div>

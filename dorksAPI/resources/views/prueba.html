@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>prueba api de dorks</title>
+</head>
+<body>
+
+<h1>Quiero molasr</h1>
+<button onclick="mandar()">prueba ps!</button>
+
+<script>
+	function mandar(){
+		var data = JSON.stringify({
+		  "grant_type": "password",
+		  "client_id": "client45jw",
+		  "client_secret": "floster#481$p",
+		  "username": "admin",
+		  "password": "admin1234"
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+			console.log(this.responseText);
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8000/api/auth");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.setRequestHeader("postman-token", "c3293d94-a5c1-3bf5-cc87-ca373072c029");
+		xhr.send(data);
+	}
+</script>
+</body>
+</html>

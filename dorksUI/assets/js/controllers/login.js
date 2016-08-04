@@ -11,13 +11,13 @@
 
     loginConfig.$inject = ['$authProvider'];
     function loginConfig($authProvider){
-        $authProvider.loginUrl = 'http://dorks.loc/dorksAPI/public/api/auth';
+        $authProvider.loginUrl = 'http://api.loc/api/auth';
         $authProvider.tokenName = 'token';
         $authProvider.tokenPrefix = 'user';
     }
 
-    login.$inject = ['$auth'];
-    function login($auth){
+    login.$inject = ['$auth', '$location'];
+    function login($auth, $location){
         var vm = this;
 
         vm.send = sendForm;
@@ -27,14 +27,21 @@
                 "grant_type": "password",
                 "client_id": "client45jw",
                 "client_secret": "floster#481$p",
-                username: vm.nickName,
-                password: vm.password,
+                "username": vm.nickName,
+                "password": vm.password,
             }
 
+            //$http.post(
+            //   'http://dorks.loc/dorksAPI/public/api/auth', user
+            //).then(function successCallback(res) {
+            //    console.log('bienvenido', res);
+            //}, function errorCallback(res) {
+            //    console.log('errr', res);
+            //});
             $auth.login(user)
             .then(function(res){
                 console.log('bienvenido', res);
-                //$location.path("/")
+                $location.path("/")
             })
             .catch(function(res){
                 console.log('Error', res);

@@ -13,23 +13,24 @@
         .controller('fileCtrl', inputFileController);
 
 
-    registrerMerc.$inject = ['$scope', 'inform'];
-    function registrerMerc($scope, inform){
-        $scope.numeric = /^([0-9])*$/;
-        $scope.merc = {};
+    registrerMerc.$inject = ['inform'];
+    function registrerMerc(inform){
+        var vm = this;
+        this.numeric = /^([0-9])*$/;
+        this.merc = {};
 
-        $scope.setMerc = function(merc){
-            if ( $scope.mercFrm.$valid ){
+        this.setMerc = function(merc){
+            if ( this.mercFrm.$valid ){
                 console.log(merc);
-                $scope.clear();
+                this.clear();
                 inform.add("Registro Exitoso! =D", { ttl: 3000, type: 'success' });
             } else {
                 inform.add("El Formulario es Invalido", { ttl: 3000, type: 'warning' });
             };
         };
-        $scope.clear = function(){
-            $scope.merc = {};
-            $scope.mercFrm.$setPristine(true);
+        this.clear = function(){
+            this.merc = {};
+            this.mercFrm.$setPristine(true);
         };
     }
 
