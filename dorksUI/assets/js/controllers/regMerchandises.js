@@ -5,32 +5,30 @@
         .module('dorksStore.regMerc', [
             'ngTouch',
             'ui.bootstrap',
-            'inform',
-            'ngAnimate',
             'ngFileUpload'
         ])
-        .controller('regMercCtrl', registrerMerc)
+        .controller('registrerCtrl', regMerc)
         .controller('fileCtrl', inputFileController);
 
 
-    registrerMerc.$inject = ['inform'];
-    function registrerMerc(inform){
+    regMerc.$inject = ['inform'];
+    function regMerc(inform){
         var vm = this;
-        this.numeric = /^([0-9])*$/;
-        this.merc = {};
+        vm.numeric = /^([0-9])*$/;
+        vm.merc = {};
 
-        this.setMerc = function(merc){
-            if ( this.mercFrm.$valid ){
+        vm.setMerc = function(merc){
+            if ( vm.mercFrm.$valid ){
                 console.log(merc);
-                this.clear();
+                vm.clear();
                 inform.add("Registro Exitoso! =D", { ttl: 3000, type: 'success' });
             } else {
                 inform.add("El Formulario es Invalido", { ttl: 3000, type: 'warning' });
             };
         };
-        this.clear = function(){
-            this.merc = {};
-            this.mercFrm.$setPristine(true);
+        vm.clear = function(){
+            vm.merc = {};
+            vm.mercFrm.$setPristine(true);
         };
     }
 

@@ -440,7 +440,7 @@
             }
             if (!token) {
                 var tokenPath = this.SatellizerConfig.tokenRoot ? this.SatellizerConfig.tokenRoot + '.' + this.SatellizerConfig.tokenName : this.SatellizerConfig.tokenName;
-                return this.$log.warn('Expecting a token named "' + tokenPath);
+                return this.$log.warn('Expecting a token named ' + tokenPath);
             }
             this.SatellizerStorage.set(this.prefixedTokenName, token);
         };

@@ -3,6 +3,8 @@
 
     angular
         .module('dorksStore', [
+            'inform',
+            'ngAnimate',
             'ui.router',
             'dorksStore.regMerc',
             'dorksStore.login'
@@ -28,9 +30,10 @@
                 templateUrl: 'assets/partials/mercancias.tpl.html'
             });
 
-        homeCtrl.$inject = ['$log'];
-        function homeCtrl($log){
-            $log.log('logeado');
+        homeCtrl.$inject = ['$auth', '$state'];
+        function homeCtrl($auth, $state){
+            if( !$auth.isAuthenticated() )
+                $state.go('login');
         }
     }
 })();

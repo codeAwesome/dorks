@@ -1,0 +1,54 @@
+<div class="col-lg-6" ng-controller="fileCtrl">
+	<div style="height: 300px;">
+		<uib-carousel active="active" interval="5000" no-wrap="false">
+			<uib-slide ng-repeat="slide in img track by slide.id" index="slide.id">
+				<img ng-src="{{slide.image.$ngfBlobUrl}}" style="margin:auto; max-height: 300px;
+								background: black;">
+				<div class="carousel-caption">
+					<h4>{{slide.text}}</h4>
+				</div>
+			</uib-slide>
+		</uib-carousel>
+	</div>
+
+	<div class="images-preview">
+		<div class="gallery">
+			<div class="drop-box clearImg" ng-show="picD1" ng-mouseleave="hideDelete(1)">
+				<span class="btn btn-danger ion-android-delete" ng-click="borrar(0)"></span>
+			</div>
+			<div ngf-select ng-model="pic1" class="drop-box" ngf-multiple="true" ngf-max-files="3"
+			     accept="image/*" ngf-pattern="'image/*'"  ngf-change="cargar($files, $file)">
+				<p ng-hide="img1"><i class="ion-ios-camera-outline ion-camera-size"></i></p>
+				<div ng-show="img1" ng-mouseover="showDelete(1)">
+					<img class="img-preview" ngf-src="img1">
+				</div>
+			</div>
+		</div>
+
+		<div class="gallery">
+			<div class="drop-box clearImg" ng-show="picD2" ng-mouseleave="hideDelete(2)">
+				<span class="btn btn-danger ion-android-delete" ng-click="borrar(1)"></span>
+			</div>
+			<div ngf-select ng-model="pic2" class="drop-box" ngf-multiple="true" ngf-max-files="3"
+			     accept="image/*" ngf-pattern="'image/*'" ngf-change="cargar($files, $file)">
+				<p ng-hide="img2"><i class="ion-ios-camera-outline ion-camera-size"></i></p>
+				<div ng-show="img2" ng-mouseover="showDelete(2)">
+					<img class="img-preview" ngf-src="img2">
+				</div>
+			</div>
+		</div>
+
+		<div class="gallery">
+			<div class="drop-box clearImg" ng-show="picD3" ng-mouseleave="hideDelete(3)">
+				<span class="btn btn-danger ion-android-delete" ng-click="borrar(2)"></span>
+			</div>
+			<div ngf-select ng-model="pic3" class="drop-box" ngf-multiple="true" ngf-max-files="3"
+			     accept="image/*" ngf-pattern="'image/*'" ngf-change="cargar($files, $file)">
+				<p ng-hide="img3"><i class="ion-ios-camera-outline ion-camera-size"></i></p>
+				<div ng-show="img3" ng-mouseover="showDelete(3)">
+					<img class="img-preview" ngf-src="img3">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<div class="col-lg-6">
+	<div class="col-md-6 col-md-offset-3" ng-class="{ 'has-error': !reg.mercFrm.des.$pristine && reg.mercFrm.des.$error.required, 'has-success': !reg.mercFrm.des.$pristine && reg.mercFrm.des.$valid }">
+
+		<label class="control-label">Descripcion:</label>
+		<input type="text" class="form-control" ng-model="reg.merc.name" name="des" required>
+	</div>
+
+	<div class="col-md-6 col-md-offset-3" ng-class="{ 'has-error': !reg.mercFrm.brand.$pristine && reg.mercFrm.brand.$error.required, 'has-success': !reg.mercFrm.brand.$pristine && reg.mercFrm.brand.$valid }">
+
+		<label class="control-label">Marca:</label>
+		<input type="text" class="form-control" ng-model="reg.merc.brand" name="brand" required>
+	</div>
+
+	<div class="col-md-6 col-md-offset-3" ng-class="{ 'has-error': !reg.mercFrm.size.$pristine && (reg.mercFrm.size.$error.required || reg.mercFrm.size.$error.number || reg.mercFrm.size.$error.pattern), 'has-success': !reg.mercFrm.size.$pristine && reg.mercFrm.size.$valid }">
+
+		<label class="control-label">Talla:</label>
+		<input type="number" class="form-control" ng-model="reg.merc.size" min="1" name="size" ng-pattern="numeric" ng-minlength="1" required>
+	</div>
+
+	<div class="col-md-6 col-md-offset-3" ng-class="{ 'has-error': !reg.mercFrm.stock.$pristine && (reg.mercFrm.stock.$error.required || reg.mercFrm.stock.$error.number || reg.mercFrm.stock.$error.pattern), 'has-success': !reg.mercFrm.stock.$pristine && reg.mercFrm.stock.$valid }">
+
+		<label class="control-label">Cantidad en Existencia:</label>
+		<input type="number" class="form-control" ng-model="reg.merc.stock" min="1" name="stock" ng-pattern="numeric" required>
+	</div>
+
+	<div class="col-md-6 col-md-offset-3" ng-class="{ 'has-error': !reg.mercFrm.price.$pristine && (reg.mercFrm.price.$error.required || reg.mercFrm.price.$error.number || reg.mercFrm.price.$error.pattern ), 'has-success': !reg.mercFrm.price.$pristine && reg.mercFrm.price.$valid }">
+
+		<label class="control-label">Precio:</label>
+		<input type="number" class="form-control" ng-model="reg.merc.price" min="1" name="price" ng-pattern="numeric" required>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="col-md-6 col-md-offset-3 btn-footer">
+		<button class="btn bg-purple btn-flat" ng-click="reg.setMerc(reg.merc)">Guardar</button>
+		<button type="reset" class="btn bg-orange btn-flat" ng-click="reg.clear()">Limpiar</button>
+	</div>
+</div>
