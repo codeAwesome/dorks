@@ -37,6 +37,6 @@ class OauthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        
     }
 }
