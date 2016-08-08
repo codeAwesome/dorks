@@ -14,7 +14,7 @@
         $authProvider.loginUrl = 'http://api.loc/api/auth';
         $authProvider.tokenName = "access_token";
         $authProvider.tokenPrefix = 'user';
-        $authProvider.httpInterceptor = false;
+        $authProvider.httpInterceptor = function(){ return true; }
     }
 
     login.$inject = ['$auth', '$state'];

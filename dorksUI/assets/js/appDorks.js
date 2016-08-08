@@ -11,9 +11,10 @@
         ])
         .config(appConfig);
 
-    appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
-    function appConfig($stateProvider, $urlRouterProvider){
+    appConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
+    function appConfig($stateProvider, $urlRouterProvider, $httpProvider){
         $urlRouterProvider.otherwise("/");
+        $httpProvider.interceptors.push('unauthorized');
 
         $stateProvider
             .state('login', {

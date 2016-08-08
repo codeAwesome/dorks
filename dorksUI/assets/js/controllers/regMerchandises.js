@@ -11,17 +11,25 @@
         .controller('fileCtrl', inputFileController);
 
 
-    regMerc.$inject = ['inform'];
-    function regMerc(inform){
+    regMerc.$inject = ['inform', '$http'];
+    function regMerc(inform, $http){
         var vm = this;
         vm.numeric = /^([0-9])*$/;
         vm.merc = {};
 
         vm.setMerc = function(merc){
             if ( vm.mercFrm.$valid ){
-                console.log(merc);
+                //console.log(merc);
                 vm.clear();
                 inform.add("Registro Exitoso! =D", { ttl: 3000, type: 'success' });
+                $http.post('http://api.loc/api/regMerc', merc ).then(
+                    function success(res){
+                        console.log(res);
+                    },
+                    function error(res){
+                        console.log(res);
+                    }
+                );
             } else {
                 inform.add("El Formulario es Invalido", { ttl: 3000, type: 'warning' });
             };
