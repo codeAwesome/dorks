@@ -23,6 +23,9 @@ $api->version('v1', function ($api) {
         $api->post('/auth', 'Auth\OAuthController@authorizeUser');
         $api->group(['middleware'=>'api.auth'], function ($api){
             //Uris of the API
+            $api->get('/hola', function (){
+                return response()->json(['saludo' => 'hablame Ramoon!']);
+            });
         });
     });
 });
