@@ -9,5 +9,5 @@
 		<input type="password" name="password" placeholder="Password..." class="form-control" ng-model="login.password" required>
 	</div>
 
-	<button type="submit" class="btn" ng-disabled="loginForm.$invalid">Ingresar</button>
+	<button type="submit" class="btn" ng-disabled="loginForm.$invalid" ng-mouseleave="login.blur($event)">Ingresar</button>
 </form>

@@ -3,8 +3,7 @@
 
     angular
         .module('dorksStore.login', [
-            'inform',
-            'satellizer',
+            'satellizer'
         ])
         .config(loginConfig)
         .controller('loginCtrl', login)
@@ -16,11 +15,17 @@
         $authProvider.tokenPrefix = 'user';
     }
 
-    login.$inject = ['$auth', '$state', 'refrehToken'];
-    function login($auth, $state, refrehToken){
+    login.$inject = ['$auth', '$state', 'refrehToken', 'inform'];
+    function login($auth, $state, refrehToken, inform){
         var vm = this;
 
         vm.send = sendForm;
+
+        vm.blur = btnBlur;
+
+        function btnBlur($event){
+            $event.target.blur();
+        }
 
         function sendForm(){
             var user = {
@@ -38,6 +43,8 @@
                 })
                 .catch(function(res){
                     console.log(res);
+                    var msj = res.data.errors.detail;
+                    inform.add( msj, { ttl: 3000, type: 'danger' });
                 });
         }
     }

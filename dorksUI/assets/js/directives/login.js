@@ -6,5 +6,5 @@
                 restrict: 'E',
                 templateUrl: 'assets/partials/inc/loginForm.tpl.html'
             }
-        })
+        });
 })();
