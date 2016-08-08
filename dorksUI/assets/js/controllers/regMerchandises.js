@@ -11,33 +11,37 @@
         .controller('fileCtrl', inputFileController);
 
 
-    regMerc.$inject = ['inform', '$http'];
-    function regMerc(inform, $http){
+    regMerc.$inject = ['inform', '$http', 'refrehToken'];
+    function regMerc(inform, $http, refrehToken){
         var vm = this;
         vm.numeric = /^([0-9])*$/;
         vm.merc = {};
 
         vm.setMerc = function(merc){
             if ( vm.mercFrm.$valid ){
-                //console.log(merc);
+                console.log(merc);
                 vm.clear();
+
                 inform.add("Registro Exitoso! =D", { ttl: 3000, type: 'success' });
-                $http.post('http://api.loc/api/regMerc', merc ).then(
+
+                $http.get('http://api.loc/api/hola').then(
                     function success(res){
                         console.log(res);
                     },
                     function error(res){
                         console.log(res);
+                        if ( refrehToken.refresh(res.status) )
+                            refrehToken.setRequestBack(res);
                     }
                 );
             } else {
                 inform.add("El Formulario es Invalido", { ttl: 3000, type: 'warning' });
-            };
-        };
+            }
+        }
         vm.clear = function(){
             vm.merc = {};
             vm.mercFrm.$setPristine(true);
-        };
+        }
     }
 
     inputFileController.$inject = ['$scope', 'inform'];

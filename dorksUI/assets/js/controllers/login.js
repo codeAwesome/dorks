@@ -14,11 +14,10 @@
         $authProvider.loginUrl = 'http://api.loc/api/auth';
         $authProvider.tokenName = "access_token";
         $authProvider.tokenPrefix = 'user';
-        $authProvider.httpInterceptor = function(){ return true; }
     }
 
-    login.$inject = ['$auth', '$state'];
-    function login($auth, $state){
+    login.$inject = ['$auth', '$state', 'refrehToken'];
+    function login($auth, $state, refrehToken){
         var vm = this;
 
         vm.send = sendForm;
@@ -33,8 +32,9 @@
             }
 
             $auth.login(user)
-                .then(function(){
+                .then(function(res){
                     $state.go('home');
+                    refrehToken.setToken( res.data['refresh_token'] );
                 })
                 .catch(function(res){
                     console.log(res);
