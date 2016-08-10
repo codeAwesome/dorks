@@ -26,6 +26,10 @@ $api->version('v1', function ($api) {
             $api->get('/hola', function (){
                 return response()->json(['saludo' => 'hablame Ramoon!']);
             });
+
+	    $api->post('/regMerc', function(){
+                return response("", 201);
+            });
         });
     });
 });
