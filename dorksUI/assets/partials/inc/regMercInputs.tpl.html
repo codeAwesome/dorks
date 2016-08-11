@@ -30,9 +30,24 @@
 	</div>
 
 	<div class="clearfix"></div>
+	<style>
+		.progress {
+			display: inline-block;
+			width: 100px;
+			border: 3px groove #CCC;
+		}
+		.progress div {
+			font-size: smaller;
+			background: orange;
+			width: 0;
+		}
+	</style>
+	<span class="progress" ng-show="progress >= 0">
+      <div style="width:{{ reg.progress }}%" ng-bind="progress + '%'"></div>
+    </span>
 
 	<div class="col-md-6 col-md-offset-3 btn-footer">
-		<button class="btn bg-purple btn-flat" ng-click="reg.setMerc(reg.merc)">Guardar</button>
+		<button class="btn bg-purple btn-flat" ng-click="reg.setMerc(reg.merc)" ng-disabled="reg.mercFrm.$invalid">Guardar</button>
 		<button type="reset" class="btn bg-orange btn-flat" ng-click="reg.clear()">Limpiar</button>
 	</div>
 </div>

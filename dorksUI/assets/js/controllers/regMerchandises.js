@@ -11,80 +11,100 @@
         .controller('fileCtrl', inputFileController);
 
 
-    regMerc.$inject = ['inform', '$http', 'refrehToken'];
-    function regMerc(inform, $http, refrehToken){
+    regMerc.$inject = ['inform', 'refrehToken', 'Upload', '$scope'];
+    function regMerc(inform, refrehToken, Upload, $scope){
         var vm = this;
         vm.numeric = /^([0-9])*$/;
         vm.merc = {};
+        vm.progress = "0";
+        $scope.files = [];
 
-        vm.setMerc = function(merc){
-            if ( vm.mercFrm.$valid ){
-                console.log(merc);
-                vm.clear();
+        vm.setMerc = setForm;
 
-                inform.add("Registro Exitoso! =D", { ttl: 3000, type: 'success' });
+        vm.clear = clearForm;
 
-                $http.get('http://api.loc/api/hola').then(
-                    function success(res){
-                        console.log(res);
-                    },
-                    function error(res){
-                        console.log(res);
-                        if ( refrehToken.refresh(res.status) )
-                            refrehToken.setRequestBack(res);
+        function setForm(merc){
+            Upload.base64DataUrl($scope.files).then(function(images){
+                console.log(merc, images);
+
+                Upload.upload({
+                    url: 'http://api.loc/api/regMerc',
+                    data: {
+                        files: images,
+                        merchandise: JSON.stringify(merc),
+                        prueba: 0
                     }
-                );
-            } else {
-                inform.add("El Formulario es Invalido", { ttl: 3000, type: 'warning' });
-            }
+                }).then(success, error, progress);
+
+                function success(res){
+                    console.log(res);
+                    inform.add("Registro Exitoso! =D", { ttl: 5000, type: 'success' });
+                    vm.clear();
+                }
+                function error(res){
+                    console.log(res);
+                    if ( refrehToken.refresh(res.status) )
+                        refrehToken.setRequestBack(res);
+                    else
+                        inform.add(res.data.errors.detail, { ttl: 5000, type: 'danger' });
+                }
+                //progreso durante el envio de la imagen
+                function progress(evt){ vm.progress = parseInt(100.0 * evt.loaded / evt.total); }
+            });
         }
-        vm.clear = function(){
+
+        function clearForm(){
             vm.merc = {};
+            vm.progress = "0";
             vm.mercFrm.$setPristine(true);
         }
     }
 
-    inputFileController.$inject = ['$scope', 'inform'];
-    function inputFileController($scope, inform){
-        $scope.pic1 = [];
-        $scope.pic2 = [];
-        $scope.pic3 = [];
-        $scope.img = [{
+    inputFileController.$inject = ['inform', '$scope'];
+    function inputFileController(inform, $scope){
+        var vm = this;
+        vm.active = 0;
+        vm.pic1 = vm.pic2 = vm.pic3 = [];
+        vm.img = [{
             image: {$ngfBlobUrl:'assets/img/black.jpeg'},
             text: 'Agregue sus imagenes debajo',
             id: 0
         }];
-        $scope.active = 0;
 
-        $scope.showDelete = function(n){
-            $scope['picD'+n] = true;
+
+        vm.showDelete = function(n){
+            vm['picD'+n] = true;
         }
-        $scope.hideDelete = function(n){
-            $scope['picD'+n] = false;
+
+        vm.hideDelete = function(n){
+            vm['picD'+n] = false;
         }
-        $scope.cargar = function(files, file){
+
+        vm.cargar = function(files, file){
             if ( files.length == 1 ){
                 var i = 1;
                 var ok = false;
                 while( i <= 3 && ok == false ) {
-                    if ( !$scope['img' + i] ) {
-                        $scope['img' + i] = file;
+                    if ( !vm['img' + i] ) {
+                        vm['img' + i] = file;
+                        $scope.$parent.files[i-1 || 0] = file;
                         ok = true;
                     }
                     i++;
                 }
             } else if ( files.length > 1 ){
-                $scope.img1 = files[0];
-                $scope.img2 = files[1];
-                $scope.img3 = files[2] || $scope.img3;
+                $scope.$parent.files[0] = vm.img1 = files[0];
+                $scope.$parent.files[1] = vm.img2 = files[1];
+                $scope.$parent.files[2] = vm.img3 = files[2] || vm.img3;
             }
+
             if (file) {
-                $scope.img = [];
+                vm.img = [];
                 for (i = 0; i < 3; i++) {
                     var j = i+1;
-                    var carrusel = $scope['img'+j];
+                    var carrusel = vm['img'+j];
                     if (carrusel) {
-                        $scope.img.push({
+                        vm.img.push({
                             image: carrusel,
                             id: i
                         });
@@ -92,30 +112,31 @@
                 }
             }
         }
-        $scope.borrar = function (idx){
-            if ( $scope.img[idx] ){
-                var item = $scope.img[idx].image;
+
+        vm.borrar = function (idx){
+            if ( vm.img[idx] ){
+                var item = vm.img[idx].image;
                 var i = 1;
                 var ok = false;
 
                 while ( i <= 3 && ok == false ) {
                     var j = 0;
                     var pic = 'pic' + i;
-                    while (j < $scope[pic].length && ok == false) {
-                        if ($scope[pic][j] == item) {
+                    while (j < vm[pic].length && ok == false) {
+                        if (vm[pic][j] == item) {
                             ok = true;
                             var k = 0;
 
-                            $scope['picD'+ (idx + 1)] = false;
-                            $scope[pic].splice(j, 1);
-                            $scope['img' + (idx + 1)] = null;
-                            $scope.img.splice(idx, 1);
-                            if( $scope.img.length != 0 ) {
-                                for (k = 0; k < $scope.img.length; k++) {
-                                    $scope.img[k].id = k;
+                            vm['picD'+ (idx + 1)] = false;
+                            vm[pic].splice(j, 1);
+                            vm['img' + (idx + 1)] = null;
+                            vm.img.splice(idx, 1);
+                            if( vm.img.length != 0 ) {
+                                for (k = 0; k < vm.img.length; k++) {
+                                    vm.img[k].id = k;
                                 }
                             } else {
-                                $scope.img = [{
+                                vm.img = [{
                                     image: {$ngfBlobUrl:'assets/img/black.jpeg'},
                                     text: 'Agregue sus imagenes debajo',
                                     id: 0
@@ -123,10 +144,10 @@
                             }
                             for (k = 1; k <= 3; k++){
                                 var afId = k < 3 ? k + 1 : k;
-                                if ( $scope['img' + afId] ) {
-                                    if ( !$scope['img' + k] ) {
-                                        $scope['img' + k] = $scope['img' + afId];
-                                        $scope['img' + afId] = null;
+                                if ( vm['img' + afId] ) {
+                                    if ( !vm['img' + k] ) {
+                                        vm['img' + k] = vm['img' + afId];
+                                        vm['img' + afId] = null;
                                     }
                                 }
                             }

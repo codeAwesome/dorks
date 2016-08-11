@@ -5,8 +5,8 @@
         .module('dorksStore')
         .factory('refrehToken', refreshToken);
 
-    refreshToken.$inject = ['$auth', '$state', '$http'];
-    function refreshToken($auth, $state, $http){
+    refreshToken.$inject = ['$auth', '$state', '$http', 'inform'];
+    function refreshToken($auth, $state, $http, inform){
         var obj = {};
 
         obj.refresh = function(status){
@@ -19,15 +19,18 @@
                     "refresh_token": window.localStorage['refresh_token']
                 }
 
-                console.log(user)
                 $auth.login(user)
-                    .then(function () {
+                    .then(function(){
+                        console.log("token actualizado");
                         return true;
                     })
-                    .catch(function () {
+                    .catch(function(){
+                        console.log("no se pudo actualizar el token");
                         $state.go('login');
                     });
             }
+
+            return false;
         }
         obj.getToken = function(){
             return window.localStorage['refresh_token'];
